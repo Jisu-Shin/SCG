@@ -1,0 +1,32 @@
+{{>layout/home-header}}
+
+<div class="container">
+    {{>layout/bodyheader}}
+
+    <table class="table table-striped">
+        <thead class = "thead strong">
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>가격</th>
+            <th>재고수량</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#items}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{name}}</td>
+                <td>{{price}}</td>
+                <td>{{stockQuantity}}</td>
+                <td><a href="/items/{{id}}" role="button" class="btn btn-sm btn-primary" >수정</a></td>
+            </tr>
+        {{/items}}
+        </tbody>
+    </table>
+
+    {{>layout/bodyfooter}}
+</div>
+
+{{>layout/footer}}

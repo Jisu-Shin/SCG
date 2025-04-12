@@ -1,0 +1,98 @@
+{{>layout/home-header}}
+
+<div class="container">
+    {{>layout/bodyheader}}
+    <div class="row">
+        <div class="col-7 border border-warning me-3">
+            <h3>SMS 템플릿 조회 및 등록</h3>
+            <div class="template">
+                <table class="table table-striped">
+                    <thead class = "thead strong">
+                    <tr>
+                        <th>번호</th>
+                        <th>템플릿내용</th>
+                        <th>SMS유형</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#templates}}
+                        <tr>
+                            <td><a href="">{{id}}</a></td>
+                            <td>{{templateContent}}</td>
+                            <td>{{smsType}}</td>
+                        </tr>
+                    {{/templates}}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <form role="form" action="/smsTemplates/new" method="post">
+                    <div class="form-group">
+                        <label for="templateContent">SMS 템플릿내용</label>
+                        <textarea class="form-control" templateVariable="내용을 입력하세요" id="templateContent" name ="templateContent"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="smsType">SMS유형</label>
+                        <select class="form-select" name="smsType" id="smsType">
+                            <option selected>선택해주세요</option>
+                            <option value="INFORMAITONAL">정보성 문자</option>
+                            <option value="ADVERTISING">광고성 문자</option>
+                            <option value="VERIFICATION">인증 문자</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </form>
+                <br/>
+            </div>
+        </div>
+        <div class="col-4 border border-success me-3">
+            <h4>템플릿변수 조회 및 등록</h4>
+            <div class="placeholders">
+                <table class="table table-hover" id="placeholdersTable">
+                    <thead class = "thead strong">
+                    <tr>
+                        <th>분류</th>
+                        <th>영어 텍스트</th>
+                        <th>한글 텍스트</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#placeholders}}
+                        <tr>
+                            <td>{{displayVarType}}</td>
+                            <td>{{enText}}</td>
+                            <td>{{koText}}</td>
+                        </tr>
+                    {{/placeholders}}
+                    </tbody>
+                </table>
+                <p>⚠️ 더블 클릭시 SMS 템플릿에 자동 추가 됩니다.</p>
+            </div>
+            <div>
+                <form role="form" method="post" action="/templateVariable/new">
+                    <label for="smsType">템플릿 변수 유형</label>
+                    <select class="form-select" name="variableType" id="variableType">
+                        <option selected>선택해주세요</option>
+                        <option value="CUST">고객</option>
+                        <option value="ITEM">공연</option>
+                    </select>
+                    <div class="form-group">
+                        <label for="koText">한글 텍스트</label>
+                        <input type="text" class="form-control" templateVariable="내용을 입력하세요" id="koText" name ="koText">
+                    </div>
+                    <div class="form-group">
+                        <label for="enText">영어 텍스트</label>
+                        <input type="text" class="form-control" templateVariable="내용을 입력하세요" id="enText" name ="enText">
+                    </div>
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </form>
+                <br/>
+            </div>
+        </div>
+    </div>
+
+
+    {{>layout/bodyfooter}}
+</div> <!-- /container -->
+
+{{>layout/footer}}

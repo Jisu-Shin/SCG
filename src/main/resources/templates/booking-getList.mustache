@@ -1,0 +1,56 @@
+{{>layout/home-header}}
+
+<div class="container">
+    {{>layout/bodyheader}}
+    <div>
+        <form class="row" action="/bookings" method="GET">
+            <div class="col-auto">
+                <input type="text" name="custName" class="form-control" placeholder="고객명을 입력해주세요"
+                       value="{{#bookingSearch}}{{custName}}{{/bookingSearch}}">
+            </div>
+            <div class="col-auto">
+                <select class="form-select" name="bookingStatus">
+                    <option value="">주문상태</option>
+                    <option value="BOOK">예매 완료</option>
+                    <option value="CANCEL">예매 취소</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">검색</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead class = "thead strong">
+        <tr>
+            <th>번호</th>
+            <th>고객명</th>
+            <th>공연명</th>
+            <th>예매일시</th>
+            <th>수량</th>
+            <th>상태</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#bookings}}
+            <tr>
+                <td>{{bookId}}</td>
+                <td>{{custName}}</td>
+                <td>{{itemName}}</td>
+                <td>{{bookDt}}</td>
+                <td>{{count}}</td>
+                <td>{{bookingStatus}}</td>
+                <td> {{#isBooking}}
+                    <button type ="button" class="btn btn-sm btn-danger cancel-booking">취소</button>
+                {{/isBooking}} </td>
+            </tr>
+        {{/bookings}}
+        </tbody>
+    </table>
+
+    {{>layout/bodyfooter}}
+</div>
+
+{{>layout/footer}}

@@ -1,0 +1,35 @@
+{{>layout/home-header}}
+
+<div class="container">
+    {{>layout/bodyheader}}
+    <div class="col-10">
+        <table class="table table-striped">
+            <thead class = "thead strong">
+            <tr>
+                <th>id</th>
+                <th>고객명</th>
+                <th>전화번호</th>
+                <th>메시지내용</th>
+                <th>발송일시</th>
+                <th>발송결과</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            {{#sms}}
+                <tr>
+                    <td>{{smsId}}</td>
+                    <td>{{custName}}</td>
+                    <td>{{sendPhoneNumber}}</td>
+                    <td>{{smsContent}}</td>
+                    <td>{{sendDt}}</td>
+                    <td>{{smsResult}}</td>
+                </tr>
+            {{/sms}}
+            </tbody>
+        </table>
+    </div>
+
+    {{>layout/bodyfooter}}
+</div> <!-- /container -->
+
+{{>layout/footer}}
