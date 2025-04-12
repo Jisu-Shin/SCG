@@ -22,6 +22,8 @@ public class CustomRoute {
                         .uri("http://localhost:8081"))
                 .route("ms2", r -> r.path("/ms2/**")
                         .uri("http://localhost:8082"))
+                .route("cust-service", r-> r.path("/api/custs/**")
+                        .uri("http://localhost:8083"))
                 .build();
     }
 
