@@ -17,4 +17,13 @@ public class WebClientConfig {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
+
+    @Bean
+    @Qualifier("smsWebClient")
+    public WebClient smsWebClient(WebClient webClient) {
+        return WebClient.builder()
+                .baseUrl("http://localhost:8081")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
+    }
 }
