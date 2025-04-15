@@ -1,6 +1,8 @@
 package com.example.SCG.web.controller;
 
 import com.example.SCG.client.SmsServiceClient;
+import com.example.SCG.web.dto.SmsFindListResponseDto;
+import com.example.SCG.web.dto.SmsTemplateListResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,7 +23,8 @@ public class SmsController {
 
     @GetMapping("/send")
     public String sendSms(Model model) {
-        model.addAttribute("templates", smsServiceClient.getSmsTemplates());
+        List<SmsTemplateListResponseDto> tmpltList = smsServiceClient.getSmsTemplates().block();
+        model.addAttribute("templates", tmpltList);
 //        model.addAttribute("items", itemService.findAll());
         return "sms-sendForm";
     }
@@ -33,7 +37,9 @@ public class SmsController {
         LocalDate endDt = LocalDate.now().plusDays(1);
         String parseEndDt = endDt.format(DateTimeFormatter.ofPattern("yyyyMMdd")).concat("0000");
 
-        model.addAttribute("sms", smsServiceClient.getSmsList(parseStatDt, parseEndDt));
+        List<SmsFindListResponseDto> smsList = smsServiceClient.getSmsList(parseStatDt, parseEndDt).block();
+
+        model.addAttribute("sms", smsList);
         return "sms-sendlist";
     }
 }
