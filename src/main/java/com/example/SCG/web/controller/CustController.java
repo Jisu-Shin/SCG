@@ -1,7 +1,6 @@
 package com.example.SCG.web.controller;
 
 import com.example.SCG.client.CustServiceClient;
-import com.example.SCG.web.dto.CustListResponseDto;
 import com.example.SCG.web.dto.CustSaveErrorResponseDto;
 import com.example.SCG.web.dto.CustSaveRequestDto;
 import jakarta.validation.Valid;
@@ -13,9 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-
+import reactor.core.publisher.Mono;
 
 @Controller
 @Slf4j
@@ -27,8 +24,7 @@ public class CustController {
 
     @GetMapping("")
     public String getCustList(Model model) {
-        List<CustListResponseDto> custList = custServiceClient.getCustAll().block();
-        model.addAttribute("custs", custList);
+        model.addAttribute("custs", custServiceClient.getCustAll());
         return "cust-findAll";
     }
 
@@ -38,7 +34,7 @@ public class CustController {
     }
 
     @PostMapping("/new")
-    public String save(@Valid CustSaveRequestDto requestDto, BindingResult result, Model model) {
+    public Mono<String> save(@Valid CustSaveRequestDto requestDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             CustSaveErrorResponseDto.CustSaveErrorResponseDtoBuilder builder = CustSaveErrorResponseDto.builder();
             result.getFieldErrors().forEach(error -> {
@@ -62,10 +58,11 @@ public class CustController {
 
             model.addAttribute("errors", builder.build());
             model.addAttribute("requestDto", requestDto);
-            return "cust-createForm";
+            return Mono.just("cust-createForm");
         }
 
-        Long custId = custServiceClient.createCust(requestDto).block();
-        return "redirect:/custs";
+        return custServiceClient.createCust(requestDto)
+                .map(id -> "redirect:/custs")
+                .onErrorReturn("cust-createForm");
     }
 }

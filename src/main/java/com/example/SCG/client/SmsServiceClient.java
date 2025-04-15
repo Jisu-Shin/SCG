@@ -3,6 +3,7 @@ package com.example.SCG.client;
 import com.example.SCG.web.dto.SmsFindListResponseDto;
 import com.example.SCG.web.dto.SmsTemplateListResponseDto;
 import com.example.SCG.web.dto.SmsTemplateRequestDto;
+import com.example.SCG.web.dto.TemplateVariableDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
@@ -46,6 +47,21 @@ public class SmsServiceClient {
                 .bodyValue(requestDto)
                 .retrieve()
                 .bodyToMono(Long.class);
+    }
+
+    public Mono<Long> createTemplateVariable(TemplateVariableDto requestDto) {
+        return webClient.post()
+                .uri("/api/templateVariables")
+                .bodyValue(requestDto)
+                .retrieve()
+                .bodyToMono(Long.class);
+    }
+
+    public Mono<List<TemplateVariableDto>> getTmpltVarList() {
+        return webClient.get()
+                .uri("/api/templateVariables")
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<TemplateVariableDto>>() {});
     }
 
 }
