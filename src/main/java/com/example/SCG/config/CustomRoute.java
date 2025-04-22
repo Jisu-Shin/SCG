@@ -16,14 +16,34 @@ public class CustomRoute {
     @Bean
     public RouteLocator cRoute(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("jisutudy", r -> r.path("/sms/**")
+                .route("sms-service", r -> r.path("/api/sms/**")
                         .filters(f->f.filter(l1Filter.apply(new L1Filter.Config(true,true)))
                         )
-                        .uri("http://localhost:8081"))
-                .route("ms2", r -> r.path("/ms2/**")
-                        .uri("http://localhost:8082"))
+                        .uri("http://sms-service:8080"))
+
+                .route("sms-template-service", r -> r.path("/api/smsTemplates/**")
+                        .filters(f->f.filter(l1Filter.apply(new L1Filter.Config(true,true)))
+                        )
+                        .uri("http://sms-service:8080"))
+
+                .route("template-variable-service", r -> r.path("/api/templateVariables/**")
+                        .filters(f->f.filter(l1Filter.apply(new L1Filter.Config(true,true)))
+                        )
+                        .uri("http://sms-service:8080"))
+
                 .route("cust-service", r-> r.path("/api/custs/**")
-                        .uri("http://localhost:8083"))
+                        .uri("http://cust-service:8080"))
+
+                .route("booking-service", r->r.path("/api/bookings/**")
+                        .uri("http://booking-service:8080"))
+
+                .route("item-service", r->r.path("/api/items/**")
+                        .uri("http://booking-service:8080"))
+
+                .route("view-service", r->r.path("/view/**")
+                        .filters(f->f.rewritePath("/view/(?<segment>.*)", "/${segment}"))
+                        .uri("http://view-service:8080"))
+
                 .build();
     }
 
