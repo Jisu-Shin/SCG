@@ -21,28 +21,21 @@ public class CustomRoute {
                         )
                         .uri("http://sms-service:8080"))
 
-                .route("sms-template-service", r -> r.path("/api/smsTemplates/**")
-                        .filters(f->f.filter(l1Filter.apply(new L1Filter.Config(true,true)))
-                        )
-                        .uri("http://sms-service:8080"))
-
-                .route("template-variable-service", r -> r.path("/api/templateVariables/**")
-                        .filters(f->f.filter(l1Filter.apply(new L1Filter.Config(true,true)))
-                        )
+                .route("sms-template-service", r -> r.path("/api/smsTemplates/**","/api/templateVariables/**")
                         .uri("http://sms-service:8080"))
 
                 .route("cust-service", r-> r.path("/api/custs/**")
                         .uri("http://cust-service:8080"))
 
-                .route("booking-service", r->r.path("/api/bookings/**")
-                        .uri("http://booking-service:8080"))
-
-                .route("item-service", r->r.path("/api/items/**")
+                .route("booking-service", r->r.path("/api/bookings/**","/api/items/**")
                         .uri("http://booking-service:8080"))
 
                 .route("view-service", r->r.path("/view/**")
                         .filters(f->f.rewritePath("/view/(?<segment>.*)", "/${segment}"))
-                        .uri("http://view-service:8080"))
+                        .uri("http://localhost:8084"))
+
+                .route("view-static", r->r.path("/css/**","/js/**","/assets/**")
+                        .uri("http://localhost:8084"))
 
                 .build();
     }
