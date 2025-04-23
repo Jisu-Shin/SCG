@@ -1,4 +1,4 @@
-package com.example.SCG.web.dto;
+package com.example.SCG.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

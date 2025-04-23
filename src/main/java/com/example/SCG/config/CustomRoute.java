@@ -19,16 +19,16 @@ public class CustomRoute {
                 .route("sms-service", r -> r.path("/api/sms/**")
                         .filters(f->f.filter(l1Filter.apply(new L1Filter.Config(true,true)))
                         )
-                        .uri("http://sms-service:8080"))
+                        .uri("http://localhost:8081"))
 
                 .route("sms-template-service", r -> r.path("/api/smsTemplates/**","/api/templateVariables/**")
-                        .uri("http://sms-service:8080"))
+                        .uri("http://localhost:8081"))
 
                 .route("cust-service", r-> r.path("/api/custs/**")
-                        .uri("http://cust-service:8080"))
+                        .uri("http://localhost:8085"))
 
                 .route("booking-service", r->r.path("/api/bookings/**","/api/items/**")
-                        .uri("http://booking-service:8080"))
+                        .uri("http://localhost:8083"))
 
                 .route("view-service", r->r.path("/view/**")
                         .filters(f->f.rewritePath("/view/(?<segment>.*)", "/${segment}"))

@@ -1,6 +1,6 @@
 package com.example.SCG.client;
 
-import com.example.SCG.web.dto.CustSaveRequestDto;
+import com.example.SCG.dto.CustSaveRequestDto;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
@@ -66,7 +66,7 @@ class CustServiceClientTest {
     void 고객등록() {
         // given
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://localhost:8083") // 로컬에 띄운 cust-service 주소
+                .baseUrl("http://cust-service:8080") // 로컬에 띄운 cust-service 주소
                 .build();
 
         CustServiceClient custServiceClient = new CustServiceClient(webClient);

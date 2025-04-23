@@ -1,23 +1,22 @@
 package com.example.SCG.client;
 
-import com.example.SCG.web.dto.SmsFindListResponseDto;
-import com.example.SCG.web.dto.SmsTemplateListResponseDto;
-import com.example.SCG.web.dto.SmsTemplateRequestDto;
-import com.example.SCG.web.dto.TemplateVariableDto;
+import com.example.SCG.dto.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-@Component
+@Service
 @Slf4j
 public class SmsServiceClient {
     private final WebClient webClient;
 
+    @Autowired
     public SmsServiceClient(@Qualifier("smsWebClient") WebClient webClient) {
         this.webClient = webClient;
     }
@@ -41,6 +40,14 @@ public class SmsServiceClient {
                 });
     }
 
+    public Mono<Boolean> sendSms(SmsSendRequestDto requestDto) {
+        return webClient.post()
+                .uri("/api/sms/send")
+                .bodyValue(requestDto)
+                .retrieve()
+                .bodyToMono(Boolean.class);
+    }
+
     public Mono<Long> createSmsTemplate(SmsTemplateRequestDto requestDto) {
         return webClient.post()
                 .uri("/api/smsTemplates")
@@ -49,19 +56,5 @@ public class SmsServiceClient {
                 .bodyToMono(Long.class);
     }
 
-    public Mono<Long> createTemplateVariable(TemplateVariableDto requestDto) {
-        return webClient.post()
-                .uri("/api/templateVariables")
-                .bodyValue(requestDto)
-                .retrieve()
-                .bodyToMono(Long.class);
-    }
-
-    public Mono<List<TemplateVariableDto>> getTmpltVarList() {
-        return webClient.get()
-                .uri("/api/templateVariables")
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<TemplateVariableDto>>() {});
-    }
 
 }

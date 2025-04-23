@@ -1,4 +1,4 @@
-package com.example.SCG.web.dto;
+package com.example.SCG.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

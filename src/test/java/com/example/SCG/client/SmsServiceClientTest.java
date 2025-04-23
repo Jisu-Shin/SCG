@@ -1,14 +1,11 @@
 package com.example.SCG.client;
 
-import com.example.SCG.web.dto.CustSaveRequestDto;
-import com.example.SCG.web.dto.SmsTemplateRequestDto;
+import com.example.SCG.dto.SmsTemplateRequestDto;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SmsServiceClientTest {
 
@@ -16,7 +13,7 @@ class SmsServiceClientTest {
     void 고객등록() {
         // given
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://localhost:8081") // 로컬에 띄운 cust-service 주소
+                .baseUrl("http://sms-service:8080") // 로컬에 띄운 cust-service 주소
                 .build();
 
 
